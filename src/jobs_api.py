@@ -85,7 +85,7 @@ class SuperJobAPI(JobsAPI):
     """
     def __init__(self):
         self.__url = 'https://api.superjob.ru/2.0/vacancies'
-        self.__params = {'page': 0, "count": 100}
+        self.__params = {"count": 100}
         self.__headers = {'X-Api-App-Id': os.getenv('SUPERJOB_API_KEY')}
 
         # "keyword": 'python',
@@ -109,7 +109,7 @@ class SuperJobAPI(JobsAPI):
         print(f"Поиск вакансий на SuperJob по кодовому слову: {keyword_input} ")
         vacancy_list = []
         self.__params["keyword"] = {keyword_input.lower()}
-        for i in range(6):
+        for i in range(5):
             self.__params['page'] = i
             print('.', end='')
             rsp = requests.get(self.__url, headers=self.__headers, params=self.__params).json()

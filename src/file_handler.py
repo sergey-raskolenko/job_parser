@@ -39,6 +39,10 @@ class JsonHandler(FileHandler):
     def __init__(self):
         self.__filename = "vacancies.json"
 
+    @property
+    def filename(self):
+        return self.__filename
+
     def add_vacancies(self, data: list):
         """
         Запись данных о вакансиях в файл
