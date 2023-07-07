@@ -1,6 +1,6 @@
 import os
 from abc import ABC, abstractmethod
-import datetime
+from datetime import datetime
 import requests
 
 
@@ -57,7 +57,7 @@ class HeadHunterAPI(JobsAPI):
                     'name': item.get('name'),
                     'url': item.get('alternate_url'),
                     'employer': item.get('employer').get('name'),
-                    'published_at': datetime.datetime.fromisoformat(item.get('published_at')).date(),
+                    'published_at': datetime.fromisoformat(item.get('published_at')).date().strftime("%d/%m/%Y"),
                     'area': item.get('area').get('name'), 'salary': slr
                     }
         return vcn_info
@@ -100,7 +100,7 @@ class SuperJobAPI(JobsAPI):
                     'name': item.get('profession'),
                     'url': item.get('link'),
                     'employer': item.get('client').get('title'),
-                    'published_at': datetime.datetime.fromtimestamp(item.get('date_published')),
+                    'published_at': datetime.fromtimestamp(item.get('date_published')).strftime("%d/%m/%Y"),
                     'area': item.get('town').get('title'), 'salary': slr
                     }
         return vcn_info
@@ -118,8 +118,3 @@ class SuperJobAPI(JobsAPI):
         else:
             print('')
         return vacancy_list
-
-
-sj = SuperJobAPI()
-vacs = sj.get_vacancies('python')
-print(len(vacs))
