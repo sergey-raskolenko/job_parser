@@ -43,7 +43,6 @@ class Vacancy:
                f'Дата публикации: {self.__published_time}\n' \
                f'{"-"*100}'
 
-    # сделать gt lt для всего сравнения
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}(site={self.__site}, name={self.__name}, url={self.__url}, ' \
                f'args={self.__area}, employer={self.__employer}, salary={self.__salary}, ' \
