@@ -46,13 +46,12 @@ class HeadHunterAPI(JobsAPI):
 
     @staticmethod
     def get_formatted_data(item) -> dict:
-        if item.get('salary') is None:
+        if item['salary'] is None:
             slr = 0
-        elif item.get('salary').get('from'):
-            slr = item.get('salary').get('from')
-
-        else:
-            slr = 0
+        elif item['salary']['from'] is not None:
+            slr = item['salary']['from']
+        elif item['salary']['from'] is None and item['salary']['to'] is not None:
+            slr = item['salary']['to']
         vcn_info = {'site': 'HeadHunter',
                     'name': item.get('name'),
                     'url': item.get('alternate_url'),
@@ -92,10 +91,13 @@ class SuperJobAPI(JobsAPI):
 
     @staticmethod
     def get_formatted_data(item) -> dict:
-        if item.get('payment_from') not in (None, ''):
-            slr = item.get('payment_from')
-        else:
+        if item['payment_from'] == 0 and item['payment_to'] == 0:
             slr = 0
+        elif item['payment_from'] != 0:
+            slr = item.get('payment_from')
+        elif item['payment_from'] == 0 and item['payment_to'] != 0:
+            slr = item.get('payment_to')
+
         vcn_info = {'site': 'SuperJob',
                     'name': item.get('profession'),
                     'url': item.get('link'),
