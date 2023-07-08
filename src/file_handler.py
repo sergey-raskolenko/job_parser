@@ -60,33 +60,39 @@ class JsonHandler(FileHandler):
 
     def get_10_highly_paid(self):
         """
-        Возвращает 10 самых высокооплачиваемых вакансий
+        Возвращает 10 самых высокооплачиваемых вакансий и перезаписывает их в файл
         """
         with open(self.__filename, 'r', encoding='utf-8') as file:
             data = json.load(file)
         new_data = sorted(data, key=lambda item: item.get('salary'), reverse=True)[:10]
+        with open(self.__filename, 'w', encoding='utf-8') as file:
+            json.dump(new_data, file, indent=4, ensure_ascii=False)
         return new_data
 
     def get_vacancies_by_area(self, area_input):
         """
-        Возвращает список вакансий в определенном городе
+        Возвращает список вакансий в определенном городе  и перезаписывает их в файл
         :param area_input: Пользовательский ввод города
         :return: Список вакансий в нужном городе
         """
         with open(self.__filename, 'r', encoding='utf-8') as file:
             data = json.load(file)
         new_data = [item for item in data if item.get('area').lower() == area_input.lower()]
+        with open(self.__filename, 'w', encoding='utf-8') as file:
+            json.dump(new_data, file, indent=4, ensure_ascii=False)
         return new_data
 
     def get_vacancies_by_keyword(self, keyword):
         """
-        Возвращает вакансии в названии которых присутствует ключевое слово
+        Возвращает вакансии в названии которых присутствует ключевое слово  и перезаписывает их в файл
         :param keyword: Пользовательский ввод слова
         :return: Список вакансий с ключевым словом в названии
         """
         with open(self.__filename, 'r', encoding='utf-8') as file:
             data = json.load(file)
         new_data = [item for item in data if keyword.lower() in item.get('name').lower()]
+        with open(self.__filename, 'w', encoding='utf-8') as file:
+            json.dump(new_data, file, indent=4, ensure_ascii=False)
         return new_data
 
     def clear_file(self):
