@@ -61,7 +61,7 @@ class HeadHunterAPI(JobsAPI):
                     }
         return vcn_info
 
-    def get_vacancies(self, keyword_input):
+    def get_vacancies(self, keyword_input) -> list:
         print(f"Поиск вакансий на HeadHunter по кодовому слову: {keyword_input} ")
         self.__params['text'] = f'name:{keyword_input.lower()}'
         response = requests.get(self.__url, params=self.__params).json()
@@ -97,17 +97,20 @@ class SuperJobAPI(JobsAPI):
             slr = item.get('payment_from')
         elif item['payment_from'] == 0 and item['payment_to'] != 0:
             slr = item.get('payment_to')
-
+        if item.get('client').get('title') is None:
+            employer = "Нет данных"
+        else:
+            employer = item.get('client').get('title')
         vcn_info = {'site': 'SuperJob',
                     'name': item.get('profession'),
                     'url': item.get('link'),
-                    'employer': item.get('client').get('title'),
+                    'employer': employer,
                     'published_at': datetime.fromtimestamp(item.get('date_published')).strftime("%d/%m/%Y"),
                     'area': item.get('town').get('title'), 'salary': slr
                     }
         return vcn_info
 
-    def get_vacancies(self, keyword_input):
+    def get_vacancies(self, keyword_input) -> list:
         print(f"Поиск вакансий на SuperJob по кодовому слову: {keyword_input} ")
         vacancy_list = []
         self.__params["keyword"] = {keyword_input.lower()}

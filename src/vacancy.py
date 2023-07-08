@@ -18,15 +18,21 @@ class Vacancy:
             salary: int
             published_time: str
         """
-        self.__site = data.get('site')
-        self.__name = data.get('name')
-        self.__url = data.get('url')
-        self.__area = data.get('area')
-        self.__employer = data.get('employer')
-        self.__salary = data.get('salary')
-        self.__published_time = data.get('published_at')
 
-    def __str__(self):
+        if isinstance(data.get('name'), str) and isinstance(data.get('url'), str) \
+                and isinstance(data.get('area'), str) and isinstance(data.get('employer'), str) \
+                and isinstance(data.get('published_at'), str) and isinstance(data.get('salary'), int):
+            self.__site = data.get('site')
+            self.__name = data.get('name')
+            self.__url = data.get('url')
+            self.__area = data.get('area')
+            self.__employer = data.get('employer')
+            self.__salary = data.get('salary')
+            self.__published_time = data.get('published_at')
+        else:
+            raise TypeError("Не верный тип входных данных")
+
+    def __str__(self) -> str:
         return f'{"-"*100}\n' \
                f'Сервис поиска: {self.__site}\n' \
                f'Вакансия: {self.__name}\n' \
@@ -38,15 +44,15 @@ class Vacancy:
                f'{"-"*100}'
 
     # сделать gt lt для всего сравнения
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self.__class__.__name__}(site={self.__site}, name={self.__name}, url={self.__url}, ' \
                f'args={self.__area}, employer={self.__employer}, salary={self.__salary}, ' \
                f'published_time={self.__published_time})'
 
-    def __lt__(self, other):
+    def __lt__(self, other) -> bool:
         return self.__salary <= other.__salary
 
-    def __gt__(self, other):
+    def __gt__(self, other) -> bool:
         return self.__salary >= other.__salary
 
     @property
